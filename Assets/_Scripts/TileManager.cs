@@ -13,9 +13,9 @@ public class TileManager : MonoBehaviour
     public static TileManager Instance;
     // Start is called before the first frame update
     void Start()
-    {   
+    {
         //create grid
-        StartCoroutine(GenerateGrid());
+        GenerateGrid();
     }
     private void Awake()
     {
@@ -26,7 +26,7 @@ public class TileManager : MonoBehaviour
     {
         
     }
-    public IEnumerator GenerateGrid()
+    public void GenerateGrid()
     {   
         //set camera position to grid center
         Camera.main.transform.position = new Vector3((float)_width / 2 - 0.5f, (float)_height / 2 - 0.5f, -10);
@@ -53,7 +53,6 @@ public class TileManager : MonoBehaviour
                 {
                     spawnedTile.GetComponent<SpriteRenderer>().color = _patternColor;
                 }
-                yield return new WaitForSeconds(0.01f);
             }
         }
     }

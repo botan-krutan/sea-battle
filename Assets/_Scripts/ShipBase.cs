@@ -5,7 +5,7 @@ using DG.Tweening;
 public class ShipBase : MonoBehaviour
 {
     // Start is called before the first frame update
-    protected int hp = 0;
+    public int hp = 0;
     [SerializeField] Transform[] _points;
     [SerializeField] Transform _shipGroup;
     List<Tile> pastOccupiedTiles = new List<Tile>();
@@ -46,6 +46,7 @@ public class ShipBase : MonoBehaviour
                         {
                             if (occupiedTile.occupiedShip != null)
                             {
+                                Debug.Log("Place Occupied");
                                 gameObject.transform.parent = _shipGroup;
                                 gameObject.transform.position = fallbackPosition;
                                 foreach (var ocTile in occupiedTiles)
@@ -64,6 +65,7 @@ public class ShipBase : MonoBehaviour
                 }
               if (_points.Length > resLength )
                 {
+                    Debug.Log("Out of Bounds");
                     gameObject.transform.parent = _shipGroup;
                     gameObject.transform.position = fallbackPosition;
                     foreach (var ocTile in occupiedTiles)
