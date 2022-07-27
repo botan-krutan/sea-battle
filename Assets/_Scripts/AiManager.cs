@@ -480,12 +480,12 @@ public class AiManager : MonoBehaviour
                 Debug.Log(aiMove);
                 aiBattleField[aiMove[0], aiMove[1]] = 1;
 
-                var result = MakeMove(aiMove);
+                var result = 'm'; // MakeMove(aiMove);
                 if ((result == 'w') || (result == 'k'))
                 {
                     aiBattleField[aiMove[0], aiMove[1]] = 2;
                     woundedShip.Add(aiMove);
-                    if (result == "k")
+                    if (result == 'k')
                     {
                         MarkShotsAround(woundedShip);
                         var length = woundedShip.Count;
