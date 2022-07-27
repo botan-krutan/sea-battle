@@ -36,17 +36,18 @@ public class ShipBase : MonoBehaviour
                 gameObject.transform.parent = tile.transform;
                 gameObject.transform.localPosition = Vector3.zero;
                 AddOffset();
+                Debug.Log(x.ToString() + y.ToString());
                 int resLength = 0;
                 foreach (var point in _points)
                 {
                     RaycastHit2D[] results = Physics2D.RaycastAll(point.position, Vector2.zero);
                     foreach (var res in results)
                     {
-                       if(res.collider.gameObject.TryGetComponent<Tile>(out Tile occupiedTile))
+                       if(res.collider.gameObject.TryGetComponent(out Tile occupiedTile))
                         {
                             if (occupiedTile.occupiedShip != null)
                             {
-                                Debug.Log("Place Occupied");
+                                Debug.Log(gameObject.name + " Place Occupied");
                                 gameObject.transform.parent = _shipGroup;
                                 gameObject.transform.position = fallbackPosition;
                                 foreach (var ocTile in occupiedTiles)
@@ -65,7 +66,7 @@ public class ShipBase : MonoBehaviour
                 }
               if (_points.Length > resLength )
                 {
-                    Debug.Log("Out of Bounds");
+                    Debug.Log(gameObject.name + " Out of Bounds");
                     gameObject.transform.parent = _shipGroup;
                     gameObject.transform.position = fallbackPosition;
                     foreach (var ocTile in occupiedTiles)

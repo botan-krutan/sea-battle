@@ -14,5 +14,5 @@ public class ShipOne : ShipBase
         hp = 1;
     }
     // Update is called once per frame
-
+    
 }

@@ -7,6 +7,7 @@ public class InputManager : MonoBehaviour
     ShipBase selectedShip;
     public static InputManager Instance;
     public Transform playerGroup;
+    public bool alreadyShooted = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,8 +20,8 @@ public class InputManager : MonoBehaviour
         if(Input.GetMouseButtonDown(0))
         {
             RaycastHit2D result = MouseRaycast();
-
-                switch (GameManager.Instance.gameState)
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            switch (GameManager.Instance.gameState)
                 {
                     case GameManager.GameState.PlayerArrange:
                         if (!selectedShip)
@@ -30,7 +31,7 @@ public class InputManager : MonoBehaviour
                                 if (result.collider.gameObject.TryGetComponent<ShipBase>(out ShipBase shipBase))
                                 {
                                     selectedShip = shipBase;
-                                shipBase.gameObject.transform.DOScale(1.3f, 0.5f);
+                                    shipBase.gameObject.transform.DOScale(1.3f, 0.5f);
                                     Debug.Log(selectedShip.name);
                                 }
                             }
@@ -39,21 +40,22 @@ public class InputManager : MonoBehaviour
                         else
                         {
                             Debug.Log("Placing Object");
-                            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                            
                             selectedShip.PlaceShip(mousePos.x, mousePos.y);
                             selectedShip = null;
                         }
 
                         break;
-                    case GameManager.GameState.AiArrange:
-                        break;
                     case GameManager.GameState.PlayerTurn:
+                        if (alreadyShooted) return;
+                        float[] coordinates = new float[2];
+                        coordinates[0] = mousePos.x;
+                        coordinates[1] = mousePos.y;
+                        ShootingManager.Instance.ShootTile(coordinates);
+               
                         break;
                     case GameManager.GameState.AiTurn:
-                        break;
-                    case GameManager.GameState.PlayerWin:
-                        break;
-                    case GameManager.GameState.PlayerLoose:
+                        alreadyShooted = true;
                         break;
                 
             }

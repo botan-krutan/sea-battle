@@ -2,20 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-public class Tile : MonoBehaviour
+public class Rocket : MonoBehaviour
 {
-    public ShipBase occupiedShip;
     // Start is called before the first frame update
     void Start()
+    {
         
-    {   
-        // Tile scaling animation
-        //transform.DOScale(1, 0.5f);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+    public void MoveAtTile(GameObject Tile)
+    {
+        transform.DOMove(Tile.transform.position, 2);
     }
 }
