@@ -353,9 +353,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da59803947ef5db4db62d6c930fad542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 0
   _points:
   - {fileID: 1051932547}
-  _shipGroup: {fileID: 546113830}
+  _shipGroup: {fileID: 221601082}
 --- !u!212 &197845741
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -556,10 +557,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 749aad4269207fc4bb9dae22cdda305b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 2
   _points:
   - {fileID: 252622867}
   - {fileID: 2109392845}
-  _shipGroup: {fileID: 546113830}
+  _shipGroup: {fileID: 221601082}
 --- !u!61 &425790983
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -686,6 +688,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 749aad4269207fc4bb9dae22cdda305b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 0
   _points:
   - {fileID: 1373361714}
   - {fileID: 1904089030}
@@ -1244,6 +1247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 749aad4269207fc4bb9dae22cdda305b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 0
   _points:
   - {fileID: 1741009585}
   - {fileID: 169165330}
@@ -1420,6 +1424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 749aad4269207fc4bb9dae22cdda305b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 0
   _points:
   - {fileID: 167750752}
   - {fileID: 679764100}
@@ -1705,10 +1710,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 749aad4269207fc4bb9dae22cdda305b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 2
   _points:
   - {fileID: 1698490441}
   - {fileID: 1864579224}
-  _shipGroup: {fileID: 546113830}
+  _shipGroup: {fileID: 221601082}
 --- !u!61 &1383779658
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1860,9 +1866,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da59803947ef5db4db62d6c930fad542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 0
   _points:
   - {fileID: 1828271671}
-  _shipGroup: {fileID: 546113830}
+  _shipGroup: {fileID: 221601082}
 --- !u!212 &1444254676
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2209,6 +2216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da59803947ef5db4db62d6c930fad542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 0
   _points:
   - {fileID: 1659284776}
   _shipGroup: {fileID: 546113830}
@@ -2357,6 +2365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da59803947ef5db4db62d6c930fad542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 0
   _points:
   - {fileID: 498663476}
   _shipGroup: {fileID: 546113830}
@@ -2713,9 +2722,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da59803947ef5db4db62d6c930fad542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 0
   _points:
   - {fileID: 1984698026}
-  _shipGroup: {fileID: 546113830}
+  _shipGroup: {fileID: 221601082}
 --- !u!212 &1926819286
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2841,9 +2851,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da59803947ef5db4db62d6c930fad542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 0
   _points:
   - {fileID: 44149133}
-  _shipGroup: {fileID: 546113830}
+  _shipGroup: {fileID: 221601082}
 --- !u!212 &1949359827
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2969,6 +2980,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da59803947ef5db4db62d6c930fad542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 0
   _points:
   - {fileID: 767145355}
   _shipGroup: {fileID: 546113830}
@@ -3128,6 +3140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da59803947ef5db4db62d6c930fad542, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 0
   _points:
   - {fileID: 1824683675}
   _shipGroup: {fileID: 546113830}
@@ -3262,10 +3275,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 749aad4269207fc4bb9dae22cdda305b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 2
   _points:
   - {fileID: 130936929}
   - {fileID: 744670856}
-  _shipGroup: {fileID: 546113830}
+  _shipGroup: {fileID: 221601082}
 --- !u!61 &2113472166
 BoxCollider2D:
   m_ObjectHideFlags: 0

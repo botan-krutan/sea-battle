@@ -34,20 +34,21 @@ public class AiManager : MonoBehaviour
         // foreach(var ship in ships) - for loop
         // ship.GetComponent<ShipBase>().hp - get hp
 
+        // Structure to choose a ships direction
+
         var directions = new Dictionary<int, string>()
         {
-            /*{ "left", (-1, 0) },
-            { "up", (0, 1) },
-            { "right", (1, 0) },
-            { "down", (0, 1) }*/
-
             {0, "left"},
             {1, "up"},
             {2, "right"},
             {3, "down"},
         };
 
+        // List of cells that new settled ship occupies
+
         List <(int, int)> shipCells = new List<(int, int)>();
+
+        // All the cells 10x10 -  the field for setting AI ships (0 - free, 1 - used or restricted)
 
         int[,] aiBattleField = new int[10, 10];
         for (int i = 0; i < 10; i++)
@@ -58,11 +59,8 @@ public class AiManager : MonoBehaviour
             }
         }
 
-        //Dictionary<int, int[]> myFleet = new Dictionary<int, int[]>()
-        //{
-        //};
-       
-        for (int cells = 2; cells > 0; cells--) 
+            
+        for (int cells = 2; cells > 0; cells--) // from biggest ship (4) - to 1-celled ship
         {
             for (int i = 0; i <= 4-cells; i++)
             {
@@ -73,8 +71,8 @@ public class AiManager : MonoBehaviour
                 {
                     x = Random.Range(0, 10);
                     y = Random.Range(0, 10);
-                    int dir = 1;
-                    thisShipIsSet = SetShip(x, y, cells, directions[dir]);
+                    int dir = 1; // replace by Random.Range(0, 4)
+                    thisShipIsSet = SetShip(x, y, cells, directions[dir]); // true if ship is set and cells are marked with '1'
                 }
 
                 foreach (var ship in ships)
@@ -90,9 +88,11 @@ public class AiManager : MonoBehaviour
             }
         }
 
+        // Marking all the cells that ship occupies and plus all near cells (prohibited)
+
         void MarkShotsAround(List <(int, int)> listCells)
         {
-            foreach (var cell in listCells) 
+            foreach (var cell in listCells) // each cell beneath the new settled ship
             {
                 int x = cell.Item1;
                 int y = cell.Item2;
@@ -101,17 +101,15 @@ public class AiManager : MonoBehaviour
                     for (int j = -1;  j <= 1; j++)
                     {
                         if ((x + i >= 0) && (x + i <= 9) && (y + j >= 0) && (y + j <= 9)) 
-                        {
-                            if (aiBattleField[x + i, y + j] == 0)
-                            {
-                                aiBattleField[x + i, y + j] = 1;
-                            }                            
+                        {                            
+                            aiBattleField[x + i, y + j] = 1;                                                       
                         }
                     }
                 }                   
             }           
         }
     
+        // Looking and finding free cells (number==cells) for a new ship from random start (x,y) to random direction
 
         bool SetShip(int x, int y, int cells, string dir)
         {
