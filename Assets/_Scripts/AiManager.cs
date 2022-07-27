@@ -16,6 +16,7 @@ public class AiManager : MonoBehaviour
             ships.Add(shipGroup.GetChild(i).gameObject);
         }
         GameManager.Instance.OnStateUpdated.AddListener(ArrangeShips);
+        GameManager.Instance.OnStateUpdated.AddListener(AiTurn);
     }
 
     // Update is called once per frame
@@ -160,7 +161,15 @@ public class AiManager : MonoBehaviour
 
 
         GameManager.Instance.OnStateUpdated.RemoveListener(ArrangeShips);
-        //GameManager.Instance.UpdateState(GameManager.GameState.PlayerTurn);
+        GameManager.Instance.UpdateState(GameManager.GameState.PlayerTurn);
 
+    }
+
+    void AiTurn(GameManager.GameState gameState) 
+    {
+        if (gameState == GameManager.GameState.AiTurn) {
+            // Ai Turn
+            // ShootTile
+        }
     }
 }
