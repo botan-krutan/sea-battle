@@ -80,7 +80,6 @@ public class ShipBase : MonoBehaviour
                 {
                     if (GameManager.Instance.gameState == GameManager.GameState.PlayerArrange)
                     {
-                        InputManager.Instance.playerGroup.gameObject.SetActive(false);
                         GameManager.Instance.UpdateState(GameManager.GameState.AiArrange);
                     }
                 }

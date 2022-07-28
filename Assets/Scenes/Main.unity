@@ -1778,6 +1778,8 @@ MonoBehaviour:
   OnStateUpdated:
     m_PersistentCalls:
       m_Calls: []
+  playerGroup: {fileID: 128044391}
+  aiGroup: {fileID: 652417913}
 --- !u!1 &744670855
 GameObject:
   m_ObjectHideFlags: 0

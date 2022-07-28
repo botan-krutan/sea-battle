@@ -30,12 +30,15 @@ public class ShootingManager : MonoBehaviour
                 if (result.collider.gameObject.GetComponent<Tile>())
                 {
                     Rocket rocket = Instantiate(_rocketPrefab).GetComponent<Rocket>();
-                    rocket.MoveAtTile(tile);
-                    break;
+                    return rocket.MoveAtTile(tile);
                 }
             }
+            return -1;
         }
-
-                return -1;
+        return -1;
+                 
     }
+
 }
+
+

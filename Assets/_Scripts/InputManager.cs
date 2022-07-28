@@ -51,17 +51,30 @@ public class InputManager : MonoBehaviour
                         float[] coordinates = new float[2];
                         coordinates[0] = mousePos.x;
                         coordinates[1] = mousePos.y;
-                        ShootingManager.Instance.ShootTile(coordinates);
-               
+                        int res = 0;
+                        res = ShootingManager.Instance.ShootTile(coordinates);
+                    if (res == -1)
+                    {
+                        StartCoroutine(UpdateOn3Secs());
+                        alreadyShooted = true;
+                    }
+                    else
+                    {
+                        alreadyShooted = false;
+                    }
                         break;
                     case GameManager.GameState.AiTurn:
-                        alreadyShooted = true;
+                        alreadyShooted = false;
                         break;
                 
             }
         }
     }
-
+    IEnumerator UpdateOn3Secs()
+    {
+        yield return new WaitForSeconds(3);
+        GameManager.Instance.UpdateState(GameManager.GameState.AiTurn);
+    }
     public RaycastHit2D MouseRaycast()
     {
         return Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
