@@ -40,10 +40,10 @@ public class ShipBase : MonoBehaviour
                 int resLength = 0;
                 foreach (var point in _points)
                 {
-                    RaycastHit2D[] results = Physics2D.RaycastAll(point.position, Vector2.zero);
-                    foreach (var res in results)
+                    RaycastHit2D results = Physics2D.Raycast(point.position, Vector2.zero);
+                    if (results)
                     {
-                       if(res.collider.gameObject.TryGetComponent(out Tile occupiedTile))
+                        if (results.collider.gameObject.TryGetComponent(out Tile occupiedTile))
                         {
                             if (occupiedTile.occupiedShip != null)
                             {
@@ -63,6 +63,7 @@ public class ShipBase : MonoBehaviour
                             pastOccupiedTiles.Add(occupiedTile);
                         }
                     }
+
                 }
               if (_points.Length > resLength )
                 {
@@ -75,7 +76,7 @@ public class ShipBase : MonoBehaviour
                     }
                     return;
                 }
-
+                Debug.Log("Su");
                 if (_shipGroup.childCount <= 0)
                 {
                     if (GameManager.Instance.gameState == GameManager.GameState.PlayerArrange)

@@ -50,6 +50,8 @@ public class AiManager : MonoBehaviour
             ships.Add(shipGroup.GetChild(i).gameObject);
         }
 
+        // All the cells 10x10 -  the field for setting AI ships (0 - free, 1 - used or restricted)
+
         for (int i = 0; i < 10; i++)
         {
             for (int j = 0; j < 10; j++)
@@ -85,18 +87,7 @@ public class AiManager : MonoBehaviour
         // List of cells that new settled ship occupies
 
         List <int[]> shipCells = new List<int[]>();
-
-        // All the cells 10x10 -  the field for setting AI ships (0 - free, 1 - used or restricted)
-
-        int[,] aiBattleField = new int[10, 10];
-        for (int i = 0; i < 10; i++)
-        {
-            for (int j = 0; j < 10; j++)
-            {
-                aiBattleField[i, j] = 0;
-            }
-        }
-            
+       
         for (int cells = 4; cells > 0; cells--) // from biggest ship (4) - to 1-celled ship
         {
             for (int i = 0; i <= 4-cells; i++)
@@ -132,7 +123,7 @@ public class AiManager : MonoBehaviour
     
         // Checking free cells (number==cells) for a new ship from random start (x,y) to random direction
 
-        bool SetShip(int x, int y, int cells, string dir)
+        bool SetShip(int x, int y, int cells, string dr)
         {
             int currentX = x;
             int currentY = y;
@@ -151,7 +142,7 @@ public class AiManager : MonoBehaviour
                 {
                     var newCell = new int[]{ currentX, currentY };
                     shipCells.Add(newCell);
-                    switch (dir)
+                    switch (dr)
                     {
                         case "left":
                             currentX--;
