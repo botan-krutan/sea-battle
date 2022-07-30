@@ -71,8 +71,6 @@ public class AiManager : MonoBehaviour
     }
     void ArrangeShips(GameManager.GameState gameState)
     {
-        TileManager.Instance.GenerateGrid();        
-        aiGroup.gameObject.SetActive(true);
         
         // Structure to choose a ships direction
 
@@ -94,12 +92,13 @@ public class AiManager : MonoBehaviour
             {
                 int x = 0;
                 int y = 0;
+                int dir = 0;
                 bool thisShipIsSet = false;
                 while (! thisShipIsSet)
                 {
                     x = Random.Range(0, 10);
                     y = Random.Range(0, 10);
-                    int dir = 1; // replace by Random.Range(0, 4)
+                    dir = Random.Range(1, 3);
                     thisShipIsSet = SetShip(x, y, cells, directions[dir]); // true if ship is set and cells are marked with '1'
                 }
 
@@ -108,7 +107,7 @@ public class AiManager : MonoBehaviour
                     if (ship.GetComponent<ShipBase>().hp == cells)
                     {
                         Debug.Log("Placed Ship");
-                        ship.GetComponent<ShipBase>().PlaceShip(x, y); // add dir later!!!
+                        ship.GetComponent<ShipBase>().PlaceShip(x, y, cells, directions[dir], false); // add dir later!!!
                         ships.Remove(ship);
                         break;
                     }

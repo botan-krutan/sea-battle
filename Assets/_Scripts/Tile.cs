@@ -4,7 +4,8 @@ using UnityEngine;
 using DG.Tweening;
 public class Tile : MonoBehaviour
 {
-    public ShipBase occupiedShip;
+    public ShipBase playerShip;
+    public ShipBase aiShip;
     // Start is called before the first frame update
     void Start()
         

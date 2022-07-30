@@ -41,7 +41,7 @@ public class InputManager : MonoBehaviour
                         {
                             Debug.Log("Placing Object");
                             
-                            selectedShip.PlaceShip(mousePos.x, mousePos.y);
+                            selectedShip.PlaceShip(mousePos.x, mousePos.y, selectedShip.hp, "up", true);
                             selectedShip = null;
                         }
 
@@ -67,6 +67,24 @@ public class InputManager : MonoBehaviour
                         alreadyShooted = false;
                         break;
                 
+            }
+        }
+        if(Input.GetMouseButtonDown(1))
+        {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            if (GameManager.Instance.gameState == GameManager.GameState.PlayerArrange)
+            {
+                if(MouseRaycast().collider.gameObject.TryGetComponent(out ShipBase ship))
+                {
+                    ship.PlaceShip(mousePos.x, mousePos.y, ship.hp, "right", true);
+                }
+            }
+        }
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            if (GameManager.Instance.gameState == GameManager.GameState.PlayerArrange)
+            {
+                GameManager.Instance.UpdateState(GameManager.GameState.AiArrange);
             }
         }
     }

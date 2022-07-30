@@ -24,11 +24,11 @@ public class Rocket : MonoBehaviour
             Destroy(Tile);
             Destroy(gameObject);
         });
-        if (tileComp.occupiedShip != null)
+/*        if (tileComp.occupiedShip != null)
         {
             tileComp.occupiedShip = null;
             return 0;
-        }
+        }*/
 
         return -1;
 

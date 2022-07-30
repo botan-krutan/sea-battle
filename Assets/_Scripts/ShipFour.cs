@@ -18,6 +18,6 @@ public class ShipFour : ShipBase
     public override void AddOffset()
     {
         base.AddOffset();
-        gameObject.transform.localPosition = new Vector3(gameObject.transform.localPosition.x, 1.35f, gameObject.transform.localPosition.z);
+        gameObject.transform.Translate(new Vector3(0, 1.35f, 0));
     }
 }
