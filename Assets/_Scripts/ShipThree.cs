@@ -9,16 +9,12 @@ public class ShipThree : ShipBase
     void Start()
     {
         hp = 3;
+        yOffset = 1;
     }
 
     // Update is called once per frame
     void Update()
     {
         
-    }
-    public override void AddOffset()
-    {
-        base.AddOffset();
-        gameObject.transform.Translate(0, 1, 0);
     }
 }

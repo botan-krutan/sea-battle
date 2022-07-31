@@ -98,7 +98,7 @@ public class AiManager : MonoBehaviour
                 {
                     x = Random.Range(0, 10);
                     y = Random.Range(0, 10);
-                    dir = Random.Range(1, 3);
+                    dir = Random.Range(0, 4);
                     thisShipIsSet = SetShip(x, y, cells, directions[dir]); // true if ship is set and cells are marked with '1'
                 }
 

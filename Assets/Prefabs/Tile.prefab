@@ -98,7 +98,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7fefc660146de48a43d33505ecf5fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  occupiedShip: {fileID: 0}
+  playerShip: {fileID: 0}
+  aiShip: {fileID: 0}
+  occupiedColor: {r: 0.21436377, g: 0.020754695, b: 0.5, a: 0.70980394}
 --- !u!61 &6739914358381291202
 BoxCollider2D:
   m_ObjectHideFlags: 0

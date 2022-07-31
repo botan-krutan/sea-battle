@@ -40,7 +40,7 @@ public class InputManager : MonoBehaviour
                         else
                         {
                             Debug.Log("Placing Object");
-                            
+                            //selectedShip.GetComponent<SpriteRenderer>().color = new Color(0,0,0,0);
                             selectedShip.PlaceShip(mousePos.x, mousePos.y, selectedShip.hp, "up", true);
                             selectedShip = null;
                         }
@@ -74,10 +74,36 @@ public class InputManager : MonoBehaviour
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             if (GameManager.Instance.gameState == GameManager.GameState.PlayerArrange)
             {
-                if(MouseRaycast().collider.gameObject.TryGetComponent(out ShipBase ship))
+
+             RaycastHit2D[] results = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+                foreach (var item in results)
                 {
-                    ship.PlaceShip(mousePos.x, mousePos.y, ship.hp, "right", true);
+                    if (item.collider.gameObject.TryGetComponent(out Tile tile))
+                    {
+                        if (tile.playerShip != null)
+                        {
+                            ShipBase ship = tile.playerShip;
+                            switch (ship.curDir)
+                            {
+                                case "right":
+                                    ship.PlaceShip(mousePos.x, mousePos.y, ship.hp, "down", true);
+                                    break;
+                                case "down":
+                                    ship.PlaceShip(mousePos.x, mousePos.y, ship.hp, "left", true);
+                                    break;
+                                case "left":
+                                    ship.PlaceShip(mousePos.x, mousePos.y, ship.hp, "up", true);
+                                    break;
+                                case "up":
+                                    ship.PlaceShip(mousePos.x, mousePos.y, ship.hp, "right", true);
+                                    break;
+                            }
+                        }
+
+
+                    }
                 }
+
             }
         }
         if(Input.GetKeyDown(KeyCode.Space))

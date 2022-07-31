@@ -9,6 +9,7 @@ public class TileManager : MonoBehaviour
     [SerializeField] private Color _patternColor;
     [SerializeField] private Transform _tileGroup;
     public static TileManager Instance;
+    private Tile[,] tileArray = new Tile[10, 10];
     // Start is called before the first frame update
     void Start()
     {
@@ -41,7 +42,12 @@ public class TileManager : MonoBehaviour
                 {
                     spawnedTile.GetComponent<SpriteRenderer>().color = _patternColor;
                 }
+                tileArray[x, y] = spawnedTile;
             }
         }
+    }
+    public Tile GetTile(int x, int y)
+    {   
+        return tileArray[x, y];
     }
 }

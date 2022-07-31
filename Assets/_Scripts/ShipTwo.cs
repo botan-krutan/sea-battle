@@ -9,6 +9,7 @@ public class ShipTwo : ShipBase
     void Start()
     {
         hp = 2;
+        yOffset = 0.5f;
     }
 
     // Update is called once per frame
@@ -16,10 +17,5 @@ public class ShipTwo : ShipBase
     {
         
     }
-    public override void AddOffset()
-    {
-        base.AddOffset();
-        Debug.Log("translated ship");
-        gameObject.transform.Translate(0, 0.5f, 0);
-    }
+
 }
