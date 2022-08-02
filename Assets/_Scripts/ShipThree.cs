@@ -9,12 +9,6 @@ public class ShipThree : ShipBase
     void Start()
     {
         hp = 3;
-        yOffset = 1;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

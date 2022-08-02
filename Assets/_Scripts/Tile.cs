@@ -7,7 +7,7 @@ public class Tile : MonoBehaviour
     public ShipBase playerShip;
     public ShipBase aiShip;
     public Color occupiedColor;
-
+    public ShipBase nearShip;
     // Start is called before the first frame update
     void Start()
         
@@ -19,10 +19,20 @@ public class Tile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (aiShip != null || playerShip != null)
+
+/*        if (aiShip)
         {
-            gameObject.GetComponent<SpriteRenderer>().color = occupiedColor;
+            GetComponent<SpriteRenderer>().color = new Color(0, 255, 0);
         }
-        else gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, 1);
+        else if (nearShip)
+        {
+            GetComponent<SpriteRenderer>().color = occupiedColor;
+        }
+
+        else if (playerShip)
+        {
+            GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
+        }
+        else GetComponent<SpriteRenderer>().color = new Color(255, 255, 255);*/
     }
 }

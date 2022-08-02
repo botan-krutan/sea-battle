@@ -9,8 +9,8 @@ public class ShipBase : MonoBehaviour
     // Start is called before the first frame update
     public int hp = 0;
     public string curDir = "down";
-    public float yOffset = 0;
-    List<Tile> pastOccupiedTiles = new List<Tile>();
+    List<Tile> currentlyOccupiedTiles = new List<Tile>();
+    List<Tile> nearOccupiedTiles = new List<Tile>();
     void Start()
     {
         
@@ -22,8 +22,9 @@ public class ShipBase : MonoBehaviour
     }
     public void PlaceShip(float x, float y, int shipLength, string dir, bool player)
     {
+
         gameObject.transform.DOScale(1f, 0.5f);
-        List<Tile> occupiedTiles = new List<Tile>();
+        List<Tile> futureOccupiedTiles = new List<Tile>();
         RaycastHit2D tileRaycastResult = new RaycastHit2D();
         RaycastHit2D[] results = Physics2D.RaycastAll(new Vector3(x, y, 0), Vector2.zero);
         foreach (var result in results)
@@ -35,134 +36,54 @@ public class ShipBase : MonoBehaviour
         }
         if (tileRaycastResult && tileRaycastResult.collider.gameObject.TryGetComponent(out Tile raycastedTile))    
         {
-/*            if (!CheckIfOccupied(player, ref raycastedTile))
-            {   
-                Debug.Log("Hi");
-                return;
-            }*/
             Debug.Log(raycastedTile.gameObject.name);
             int tilex = int.Parse(raycastedTile.gameObject.name.Replace($"Tile ", "")[0].ToString());
             int tiley = int.Parse(raycastedTile.gameObject.name.Replace($"Tile ", "")[1].ToString());
-
-            //Debug.Log($"Tile {tilex} {tiley}");
-            for (int i = 0; i < shipLength; i++)
+                
+            if(CanPlaceShip(tilex,tiley,shipLength, dir,player))
             {
-                if(dir == "up")
+                for (int i = 0; i < nearOccupiedTiles.Count; i++)
                 {
-                   // Debug.Log($"Tile {tilex}{tiley + i}");
-                    if (tiley + i < 10 && tiley + i >= 0)
-                    {
-                        Tile currentTile = TileManager.Instance.GetTile(tilex, tiley + i);
-                        occupiedTiles.Add(currentTile);
-                        if (!CheckIfOccupied(player, ref currentTile))
-                        {
-                            ClearTiles(occupiedTiles);
-                            return;
-                        }
-                        
-                    }
-                    else
-                    {
-                        Debug.LogWarning(gameObject.name + $" ship placement failed. Tile {tilex}{tiley + i} not found.");
-                        ClearTiles(occupiedTiles);
-                        return;
-                    }
+                    nearOccupiedTiles[i].nearShip = null;
+                }
+                //Debug.Log()
+                CheckTilesAsOccupied(tilex, tiley, shipLength, dir, player, ref  futureOccupiedTiles);
+                MarkShotsAround(futureOccupiedTiles, ref nearOccupiedTiles);
+                gameObject.transform.position = raycastedTile.transform.position;
+
+                if (dir == "right")
+                {
+                    gameObject.transform.eulerAngles = gameObject.transform.eulerAngles = new Vector3(gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y, -90);
+                    //AddOffset(false);
+
+                }
+                else if (dir == "up")
+                {
+                    gameObject.transform.eulerAngles = gameObject.transform.eulerAngles = new Vector3(gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y, 0);
+                    //AddOffset(false);
                 }
                 else if (dir == "down")
                 {
-                    if (tiley - i < 10 && tiley - i >= 0)
-                    {
-                        Tile currentTile = TileManager.Instance.GetTile(tilex, tiley - i);
-                        occupiedTiles.Add(currentTile);
-                        if (!CheckIfOccupied(player, ref currentTile))
-                        {
-                            ClearTiles(occupiedTiles);
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        Debug.LogWarning(gameObject.name + $" ship placement failed. Tile {tilex}{tiley + i} not found.");
-                        ClearTiles(occupiedTiles);
-                        return;
-                    }
-                }
-                else if (dir == "right")
-                {
-                    if (tilex + i < 10 && tilex + i >= 0)
-                    {   
-                        Tile currentTile = TileManager.Instance.GetTile(tilex + i, tiley);
-                        occupiedTiles.Add(currentTile);
-                        if (!CheckIfOccupied(player, ref currentTile))
-                        {
-                            
-                            ClearTiles(occupiedTiles);
-                            return;
-                        }
-                        Debug.Log(currentTile.gameObject.name);
-                    }
-                    else
-                    {
-                        Debug.LogWarning(gameObject.name + $" ship placement failed.Tile {tilex}{tiley + i} not found.");
-                        ClearTiles(occupiedTiles);
-                        return;
-                    }
+                    gameObject.transform.eulerAngles = gameObject.transform.eulerAngles = new Vector3(gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y, -180);
+                    //AddOffset(false);
                 }
                 else if (dir == "left")
                 {
-                    if (tilex-i < 10 && tilex - i >= 0)
-                    {
-                        Tile currentTile = TileManager.Instance.GetTile(tilex - i, tiley);
-                        occupiedTiles.Add(currentTile);
-                        if (!CheckIfOccupied(player, ref currentTile))
-                        {
-                            ClearTiles(occupiedTiles);
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        Debug.LogWarning(gameObject.name + $" ship placement failed. Tile {tilex}{tiley + i} not found.");
-                        ClearTiles(occupiedTiles);
-                        return;
-                    }
+                    gameObject.transform.eulerAngles = gameObject.transform.eulerAngles = new Vector3(gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y, 90);
+                    //AddOffset(false);
+                }
+                curDir = dir;
+
+                for (int i = 0; i < currentlyOccupiedTiles.Count; i++)
+                {
+                    if (currentlyOccupiedTiles[i] != raycastedTile) currentlyOccupiedTiles[i].playerShip = null;
                 }
 
+                currentlyOccupiedTiles = futureOccupiedTiles;
+                //Debug.LogWarning("Full Success of " + gameObject.name);
             }
+            //Debug.Log($"Tile {tilex} {tiley}");
 
-           
-
-            gameObject.transform.position = raycastedTile.transform.position;
-
-            if (dir == "right")
-            {
-                gameObject.transform.eulerAngles = gameObject.transform.eulerAngles = new Vector3(gameObject.transform.eulerAngles.x,gameObject.transform.eulerAngles.y,-90);
-                AddOffset(false);
-                
-            }
-            else if (dir == "up")
-            {
-                gameObject.transform.eulerAngles = gameObject.transform.eulerAngles = new Vector3(gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y, 0);
-                AddOffset(false);
-            }
-            else if (dir == "down")
-            {
-                gameObject.transform.eulerAngles = gameObject.transform.eulerAngles = new Vector3(gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y, - 180);
-                AddOffset(false);
-            }
-            else if (dir == "left")
-            {
-                gameObject.transform.eulerAngles = gameObject.transform.eulerAngles = new Vector3(gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y, 90);
-                AddOffset(false);
-            }
-            curDir = dir;
-            for (int i = 0; i < pastOccupiedTiles.Count; i++)
-            {
-                if(pastOccupiedTiles[i] != raycastedTile) pastOccupiedTiles[i].playerShip = null;
-
-            }
-            pastOccupiedTiles = occupiedTiles;
-            Debug.LogWarning("Full Success of " + gameObject.name);
         }
         else
         {
@@ -170,32 +91,105 @@ public class ShipBase : MonoBehaviour
             return;
         }
     }
-    public void AddOffset(bool negative)
+
+    bool CanPlaceShip(int x, int y, int shipLength, string dir, bool player)
     {   
-        if(negative)
+        for (int i = 0; i < shipLength; i++)
         {
-            gameObject.transform.Translate(0, -yOffset, 0);
-            return;
+            switch(dir)
+            {
+                case "left":
+                    if (x-i >= 10 || x-i < 0 || IsTileOccupied(TileManager.Instance.GetTile(x-i,y), player))
+                    {
+                        return false;
+                    }
+                    break;
+                case "right":
+                    if (x + i >= 10 || x + i < 0 || IsTileOccupied(TileManager.Instance.GetTile(x + i, y), player))
+                    {
+                        return false;
+                    }
+                    break;
+
+                case "up":
+                    if (y + i >= 10 || y + i < 0 || IsTileOccupied(TileManager.Instance.GetTile(x, y + i), player))
+                    {
+                        return false;
+                    }
+                    break;
+                case "down":
+                    if (y-i >= 10 || y - i < 0 || IsTileOccupied(TileManager.Instance.GetTile(x, y - i), player))
+                    {
+                        return false;
+                    }
+                    break;
+            }
         }
-        gameObject.transform.Translate(0, yOffset, 0);
-    }
-    
-    bool CheckIfOccupied(bool player, ref Tile currentTile)
-    {
-        if (currentTile.playerShip != null && currentTile.playerShip != this)
-        {
-            Debug.LogWarning(gameObject.name + $" ship placement failed. Player ship standing.");
-            return false;
-        }
-        currentTile.playerShip = this;
-        Debug.Log(currentTile.gameObject.name + currentTile.playerShip.name);
         return true;
     }
-    void ClearTiles( List<Tile> occupiedTiles)
+
+    bool IsTileOccupied(Tile tile, bool player)
+    {   if (player)
+        {   
+                //Debug.Log("hi");
+                if (tile.playerShip != null && tile.playerShip != this || tile.nearShip != null && tile.nearShip != this )
+                {
+                    Debug.LogWarning(gameObject.name + $" ship placement failed. Player ship standing.");
+                    return true;
+                }
+
+        }
+
+        return false;
+    }
+    void CheckTilesAsOccupied(int x, int y, int shipLength, string dir, bool player, ref List<Tile> tilesArray)
     {   
-        for (int i = 0; i < occupiedTiles.Count; i++)
+        for (int i = 0; i < shipLength; i++)
         {
-            occupiedTiles[i].playerShip = null;
-        } 
+            switch (dir)
+            {
+                case "up":
+                    if (player) TileManager.Instance.GetTile(x, y + i).playerShip = this;
+                    else TileManager.Instance.GetTile(x, y + i).aiShip = this;
+                    tilesArray.Add(TileManager.Instance.GetTile(x, y + i));
+                    break;
+                case "down":
+                    if (player) TileManager.Instance.GetTile(x, y - i).playerShip = this;
+                    else TileManager.Instance.GetTile(x, y - i).aiShip = this;
+                    tilesArray.Add(TileManager.Instance.GetTile(x, y - i));
+                    break;
+                case "right":
+                    if (player) TileManager.Instance.GetTile(x + i, y).playerShip = this;
+                    else TileManager.Instance.GetTile(x + i, y).aiShip = this;
+                    tilesArray.Add(TileManager.Instance.GetTile(x + i, y));
+                    break;
+                case "left":
+                    if (player) TileManager.Instance.GetTile(x - i, y).playerShip = this;
+                    else TileManager.Instance.GetTile(x-i, y).aiShip = this;
+                    tilesArray.Add(TileManager.Instance.GetTile(x - i, y));
+                    break;
+            }
+        }
+    }
+    void MarkShotsAround(List<Tile> listCells, ref List<Tile> tiles)
+    {
+        foreach (var cell in listCells) // each cell beneath the new settled ship
+        {
+            int x = int.Parse(cell.gameObject.name.Replace($"Tile ", "")[0].ToString());
+            int y = int.Parse(cell.gameObject.name.Replace($"Tile ", "")[1].ToString());
+            for (int i = -1; i <= 1; i++)
+            {
+                for (int j = -1; j <= 1; j++)
+                {
+                    if ((x + i >= 0) && (x + i <= 9) && (y + j >= 0) && (y + j <= 9))
+                    {
+    
+                        TileManager.Instance.GetTile(x + i, y + j).nearShip = this;
+                        tiles.Add(TileManager.Instance.GetTile(x + i, y + j));
+
+                    }
+                }
+            }
+        }
     }
 }

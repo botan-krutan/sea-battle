@@ -28,7 +28,10 @@ public class InputManager : MonoBehaviour
                         {   
                             if(result)
                             {
-                                if (result.collider.gameObject.TryGetComponent<ShipBase>(out ShipBase shipBase))
+                                RaycastHit2D[] results = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+                            foreach (var item in results)
+                            {
+                                if (item.collider.gameObject.TryGetComponent<ShipBase>(out ShipBase shipBase))
                                 {
                                     selectedShip = shipBase;
                                     shipBase.gameObject.transform.DOScale(1.3f, 0.5f);
@@ -36,12 +39,14 @@ public class InputManager : MonoBehaviour
                                 }
                             }
 
+                            }
+
                         }
                         else
                         {
                             Debug.Log("Placing Object");
                             //selectedShip.GetComponent<SpriteRenderer>().color = new Color(0,0,0,0);
-                            selectedShip.PlaceShip(mousePos.x, mousePos.y, selectedShip.hp, "up", true);
+                            selectedShip.PlaceShip(mousePos.x, mousePos.y, selectedShip.hp, selectedShip.curDir, true);
                             selectedShip = null;
                         }
 
