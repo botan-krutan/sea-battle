@@ -44,8 +44,10 @@ public class ShipBase : MonoBehaviour
             {
                 for (int i = 0; i < nearOccupiedTiles.Count; i++)
                 {
-                    nearOccupiedTiles[i].nearShip = null;
+                    if(nearOccupiedTiles[i].nearShips[0] == this) nearOccupiedTiles[i].nearShips[0] = null;
+                    else if (nearOccupiedTiles[i].nearShips[1] == this)nearOccupiedTiles[i].nearShips[1] = null;
                 }
+                nearOccupiedTiles.Clear();
                 //Debug.Log()
                 CheckTilesAsOccupied(tilex, tiley, shipLength, dir, player, ref  futureOccupiedTiles);
                 MarkShotsAround(futureOccupiedTiles, ref nearOccupiedTiles);
@@ -132,7 +134,7 @@ public class ShipBase : MonoBehaviour
     {   if (player)
         {   
                 //Debug.Log("hi");
-                if (tile.playerShip != null && tile.playerShip != this || tile.nearShip != null && tile.nearShip != this )
+                if (tile.playerShip != null && tile.playerShip != this || tile.nearShips[0] != null && tile.nearShips[0] != this || tile.nearShips[1] != null && tile.nearShips[1] != this)
                 {
                     Debug.LogWarning(gameObject.name + $" ship placement failed. Player ship standing.");
                     return true;
@@ -183,9 +185,18 @@ public class ShipBase : MonoBehaviour
                 {
                     if ((x + i >= 0) && (x + i <= 9) && (y + j >= 0) && (y + j <= 9))
                     {
-    
-                        TileManager.Instance.GetTile(x + i, y + j).nearShip = this;
-                        tiles.Add(TileManager.Instance.GetTile(x + i, y + j));
+                        if (! listCells.Contains(TileManager.Instance.GetTile(x + i, y + j)) && !tiles.Contains(TileManager.Instance.GetTile(x + i, y + j)))
+                        {
+                            tiles.Add(TileManager.Instance.GetTile(x + i, y + j));
+                            if (TileManager.Instance.GetTile(x + i, y + j).nearShips[0] != null)
+                            {
+                                TileManager.Instance.GetTile(x + i, y + j).nearShips[1] = this;
+                            }
+                            else TileManager.Instance.GetTile(x + i, y + j).nearShips[0] = this;
+                        }
+
+                        
+                        
 
                     }
                 }

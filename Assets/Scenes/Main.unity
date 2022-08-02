@@ -197,7 +197,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 2
   curDir: up
-  yOffset: 0
 --- !u!212 &70616376
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -298,7 +297,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 3
   curDir: up
-  yOffset: 0
 --- !u!212 &81238590
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -425,7 +423,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 1
   curDir: up
-  yOffset: 0
 --- !u!212 &90789699
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -625,7 +622,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 2
   curDir: up
-  yOffset: 0
 --- !u!212 &337969485
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -809,7 +805,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 3
   curDir: up
-  yOffset: 0
 --- !u!212 &500145705
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1069,7 +1064,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 2
   curDir: up
-  yOffset: 0
 --- !u!212 &619697565
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1437,7 +1431,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 3
   curDir: up
-  yOffset: 0
 --- !u!212 &894435893
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1590,7 +1583,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 1
   curDir: up
-  yOffset: 0
 --- !u!212 &969195079
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1743,7 +1735,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 1
   curDir: up
-  yOffset: 0
 --- !u!61 &973237458
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1844,7 +1835,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 3
   curDir: up
-  yOffset: 0
 --- !u!212 &1005639578
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2033,7 +2023,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 1
   curDir: up
-  yOffset: 0
 --- !u!212 &1232033316
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2191,7 +2180,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 1
   curDir: up
-  yOffset: 0
 --- !u!212 &1410128596
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2421,7 +2409,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 1
   curDir: up
-  yOffset: 0
 --- !u!212 &1550283587
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2579,7 +2566,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 1
   curDir: up
-  yOffset: 0
 --- !u!212 &1609568629
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2732,7 +2718,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 1
   curDir: up
-  yOffset: 0
 --- !u!212 &1633379102
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2890,7 +2875,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 2
   curDir: up
-  yOffset: 0
 --- !u!212 &1701449998
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3048,7 +3032,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 4
   curDir: up
-  yOffset: 0
 --- !u!212 &1781428736
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3149,7 +3132,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 4
   curDir: up
-  yOffset: 0
 --- !u!212 &1986087269
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3302,7 +3284,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 2
   curDir: up
-  yOffset: 0
 --- !u!212 &2085760753
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3403,7 +3384,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 2
   curDir: up
-  yOffset: 0
 --- !u!212 &2140457063
 SpriteRenderer:
   m_ObjectHideFlags: 0
