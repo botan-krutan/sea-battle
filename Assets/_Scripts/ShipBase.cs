@@ -11,6 +11,7 @@ public class ShipBase : MonoBehaviour
     public string curDir = "down";
     List<Tile> currentlyOccupiedTiles = new List<Tile>();
     List<Tile> nearOccupiedTiles = new List<Tile>();
+    public bool isPlaced = false;
     void Start()
     {
         
@@ -34,7 +35,7 @@ public class ShipBase : MonoBehaviour
                 tileRaycastResult = result;
             }
         }
-        if (x <= 9 && y <= 9 && x >= 0 && y >= 0)
+        if (x <= 9.5 && y <= 9.5 && x >= -0.5 && y >= -0.5)
         {
             if (tileRaycastResult && tileRaycastResult.collider.gameObject.TryGetComponent(out Tile raycastedTile))
             {
@@ -84,9 +85,16 @@ public class ShipBase : MonoBehaviour
                     }
 
                     currentlyOccupiedTiles = futureOccupiedTiles;
-                    //Debug.LogWarning("Full Success of " + gameObject.name);
+                    isPlaced = true;
+                    if(player)
+                    {
+                       foreach(var item in gameObject.transform.parent.GetComponentsInChildren<ShipBase>(false))
+                        {
+                            if (!item.isPlaced) return;
+                        }
+                        GameManager.Instance.ContinueMessage(true);
+                    }
                 }
-                //Debug.Log($"Tile {tilex} {tiley}");
 
             }
             else

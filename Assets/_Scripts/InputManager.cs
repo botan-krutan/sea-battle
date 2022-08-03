@@ -111,11 +111,21 @@ public class InputManager : MonoBehaviour
 
             }
         }
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Return))
         {
-            if (GameManager.Instance.gameState == GameManager.GameState.PlayerArrange)
+            if(GameManager.Instance.canContinue)
             {
-                GameManager.Instance.UpdateState(GameManager.GameState.AiArrange);
+                switch(GameManager.Instance.gameState)
+                {
+                    case GameManager.GameState.PlayerArrange:
+                        GameManager.Instance.UpdateState(GameManager.GameState.AiArrange);
+                        GameManager.Instance.ContinueMessage(false);
+                        break;
+                    case GameManager.GameState.AiTurn:
+                        GameManager.Instance.UpdateState(GameManager.GameState.PlayerTurn);
+                        GameManager.Instance.ContinueMessage(false);
+                        break;
+                }
             }
         }
     }

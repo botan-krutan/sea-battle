@@ -485,36 +485,33 @@ public class AiManager : MonoBehaviour
                 aiMoveFloat[0] = (float)aiMove[0];
                 aiMoveFloat[1] = (float)aiMove[1];
                 int result =  ShootingManager.Instance.ShootTile(aiMoveFloat, false);
-                if ((result == 0) || (result == 1))
+            if ((result == 0) || (result == 1))
+            {
+                aiBattleField[aiMove[0], aiMove[1]] = 1;
+                woundedShip.Add(aiMove);
+                if (result == 1)
                 {
-                    aiBattleField[aiMove[0], aiMove[1]] = 1;
-                    woundedShip.Add(aiMove);
-                    if (result == 1)
+                    MarkShotsAround(woundedShip);
+                    var length = woundedShip.Count;
+                    fleet[length]--;
+                    woundedShip.Clear();
+                    notAllKilled = FleetNotEmpty(fleet);
+                    if (!notAllKilled)
                     {
-                        MarkShotsAround(woundedShip);
-                        var length = woundedShip.Count;
-                        fleet[length]--;
-                        woundedShip.Clear();
-                        notAllKilled = FleetNotEmpty(fleet);
-                        if (!notAllKilled) 
-                        {
                         Debug.Log("End Game! Computer rules!!!");
                         GameManager.Instance.UpdateState(GameManager.GameState.PlayerLoose);
                         return;
-                        }
-                    
                     }
-                GameManager.Instance.UpdateState(GameManager.GameState.AiTurn);
+
                 }
-            else StartCoroutine(UpdateOn3Secs());
-           // Debug.Log("End Game! Computer rules!!!");            
-            // Ai Turn
-            // ShootTile
+                StartCoroutine(Delay(1));
+            }
+            else GameManager.Instance.ContinueMessage(true);
         }
     }
-    IEnumerator UpdateOn3Secs()
+    IEnumerator Delay(int delay)
     {
-        yield return new WaitForSeconds(5);
-        GameManager.Instance.UpdateState(GameManager.GameState.PlayerTurn);
+        yield return new WaitForSeconds(delay);
+        GameManager.Instance.UpdateState(GameManager.GameState.AiTurn);
     }
 }

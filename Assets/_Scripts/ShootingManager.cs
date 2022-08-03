@@ -69,7 +69,7 @@ public class ShootingManager : MonoBehaviour
                             Instantiate(_crossPrefab, tileComp.gameObject.transform).transform.parent = playerParent;
                             tileComp.playerShip = null;
                             return 0;
-                        }
+                        }   
                        
                     }
                     Instantiate(_dotPrefab, tileComp.gameObject.transform).transform.parent = playerParent;
