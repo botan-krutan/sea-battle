@@ -165,6 +165,16 @@ public class AiManager : MonoBehaviour
 
         GameManager.Instance.OnStateUpdated.RemoveListener(ArrangeShips);
         GameManager.Instance.UpdateState(GameManager.GameState.PlayerTurn);
+
+        // All the cells 10x10 -  the field for setting AI ships (0 - free, 1 - used or restricted)
+
+        for (int i = 0; i < 10; i++)
+        {
+            for (int j = 0; j < 10; j++)
+            {
+                aiBattleField[i, j] = 0;
+            }
+        }
     }
 
     void AiTurn(GameManager.GameState gameState) 
@@ -278,8 +288,8 @@ public class AiManager : MonoBehaviour
                 }
                 if (shot[0] != 10)
                 {
-                    Debug.Log(vesselOptions + 1);
-                    Debug.Log(size);
+                    Debug.Log("Options:"+ (vesselOptions + 1));
+                    Debug.Log("Size:"+ size);
                     return shot;
                 }
                 else
@@ -327,7 +337,7 @@ public class AiManager : MonoBehaviour
                 }
             }
             var index = Random.Range(0, Mathf.Max(1,   cellOptions.Count));
-            Debug.LogWarning(index);
+            Debug.Log("OPtionNumber"+index);
             return cellOptions[index];
         }
 
@@ -449,10 +459,10 @@ public class AiManager : MonoBehaviour
             return 0;
         }
 
+
+
         if (gameState == GameManager.GameState.AiTurn) 
         {
-
-
                 if (woundedShip.Count == 0)
                 {
                     var biggestShip = BiggestLeft(fleet);
@@ -465,8 +475,11 @@ public class AiManager : MonoBehaviour
                 if (aiMove[0] == 10)
                 {
                     Debug.Log("Can't be!!!");
+                
                 }
-                Debug.Log(aiMove);
+                Debug.Log("x:"+ aiMove[0]);
+                Debug.Log("y:"+ aiMove[1]);
+                Debug.Log("cell:"+ aiBattleField[aiMove[0], aiMove[1]]);
                 aiBattleField[aiMove[0], aiMove[1]] = 1;
                 float[] aiMoveFloat = new float[2];
                 aiMoveFloat[0] = (float)aiMove[0];
@@ -474,7 +487,7 @@ public class AiManager : MonoBehaviour
                 int result =  ShootingManager.Instance.ShootTile(aiMoveFloat, false);
                 if ((result == 0) || (result == 1))
                 {
-                    aiBattleField[aiMove[0], aiMove[1]] = 2;
+                    aiBattleField[aiMove[0], aiMove[1]] = 1;
                     woundedShip.Add(aiMove);
                     if (result == 1)
                     {
@@ -483,18 +496,25 @@ public class AiManager : MonoBehaviour
                         fleet[length]--;
                         woundedShip.Clear();
                         notAllKilled = FleetNotEmpty(fleet);
+                        if (!notAllKilled) 
+                        {
+                        Debug.Log("End Game! Computer rules!!!");
+                        GameManager.Instance.UpdateState(GameManager.GameState.PlayerLoose);
+                        return;
+                        }
+                    
                     }
                 GameManager.Instance.UpdateState(GameManager.GameState.AiTurn);
                 }
             else StartCoroutine(UpdateOn3Secs());
-            Debug.Log("End Game! Computer rules!!!");            
+           // Debug.Log("End Game! Computer rules!!!");            
             // Ai Turn
             // ShootTile
         }
     }
     IEnumerator UpdateOn3Secs()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(5);
         GameManager.Instance.UpdateState(GameManager.GameState.PlayerTurn);
     }
 }
