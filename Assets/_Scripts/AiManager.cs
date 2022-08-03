@@ -328,12 +328,7 @@ public class AiManager : MonoBehaviour
             }
             var index = Random.Range(0, Mathf.Max(1,   cellOptions.Count));
             Debug.LogWarning(index);
-            if(cellOptions.Count > 0)
-            {
-                return cellOptions[index];
-            }
-
-            return new int[] {0,0};
+            return cellOptions[index];
         }
 
         int[] AnyEmptyCellDirectioned(List<int[]> shipOnFire, char direction)
@@ -476,7 +471,7 @@ public class AiManager : MonoBehaviour
                 float[] aiMoveFloat = new float[2];
                 aiMoveFloat[0] = (float)aiMove[0];
                 aiMoveFloat[1] = (float)aiMove[1];
-                int result =  ShootingManager.Instance.ShootTile(aiMoveFloat);
+                int result =  ShootingManager.Instance.ShootTile(aiMoveFloat, false);
                 if ((result == 0) || (result == 1))
                 {
                     aiBattleField[aiMove[0], aiMove[1]] = 2;
@@ -499,7 +494,7 @@ public class AiManager : MonoBehaviour
     }
     IEnumerator UpdateOn3Secs()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
         GameManager.Instance.UpdateState(GameManager.GameState.PlayerTurn);
     }
 }

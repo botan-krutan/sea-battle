@@ -57,7 +57,7 @@ public class InputManager : MonoBehaviour
                         coordinates[0] = mousePos.x;
                         coordinates[1] = mousePos.y;
                         int res = 0;
-                        res = ShootingManager.Instance.ShootTile(coordinates);
+                        res = ShootingManager.Instance.ShootTile(coordinates, true);
                     if (res == -1)
                     {
                         StartCoroutine(UpdateOn3Secs());
@@ -121,7 +121,7 @@ public class InputManager : MonoBehaviour
     }
     IEnumerator UpdateOn3Secs()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
         GameManager.Instance.UpdateState(GameManager.GameState.AiTurn);
     }
     public RaycastHit2D MouseRaycast()
