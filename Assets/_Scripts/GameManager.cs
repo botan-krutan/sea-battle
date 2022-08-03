@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public UnityEvent<GameState> OnStateUpdated = new UnityEvent<GameState>();
     [SerializeField] GameObject playerGroup, aiGroup;
+    public bool debugMode;
     private void Awake() => Instance = this;
 
     public void UpdateState(GameState newState)
@@ -35,5 +36,12 @@ public class GameManager : MonoBehaviour
         AiTurn,
         PlayerWin,
         PlayerLoose
+    }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Backspace))
+        {
+            debugMode = !debugMode;
+        }
     }
 }

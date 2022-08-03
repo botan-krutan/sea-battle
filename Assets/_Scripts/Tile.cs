@@ -20,21 +20,23 @@ public class Tile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (aiShip)
-        {
-            GetComponent<SpriteRenderer>().color = new Color(0, 255, 0);
+        if (GameManager.Instance.debugMode)
+        {   
+            
+            if (aiShip)
+            {
+                GetComponent<SpriteRenderer>().color = new Color(0, 255, 0);
+            }
+            else if (playerShip && GameManager.Instance.gameState == GameManager.GameState.PlayerArrange )
+            {
+                GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
+            }
+            else if (nearShips[0] != null || nearShips[1] != null)
+            {
+                GetComponent<SpriteRenderer>().color = occupiedColor;
+            }
+            else GetComponent<SpriteRenderer>().color = new Color(255, 255, 255);
         }
-/*        else if (playerShip)
-        {
-            GetComponent<SpriteRenderer>().color = new Color(255, 0, 0);
-        }*/
-        else if (nearShips[0] != null || nearShips[1] != null)
-        {
-            GetComponent<SpriteRenderer>().color = occupiedColor;
-        }
-
-
         else GetComponent<SpriteRenderer>().color = new Color(255, 255, 255);
     }
 }
