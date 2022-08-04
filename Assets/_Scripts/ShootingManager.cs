@@ -8,6 +8,7 @@ public class ShootingManager : MonoBehaviour
     [SerializeField] GameObject _rocketPrefab, _crossPrefab, _dotPrefab;
     [SerializeField] Transform playerParent;
     [SerializeField] Transform aiParent;
+    [SerializeField] AudioClip waterSound, hitSound, explosionSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -51,18 +52,21 @@ public class ShootingManager : MonoBehaviour
 
                             }
                             if (stopGame) GameManager.Instance.UpdateState(GameManager.GameState.PlayerWin);
+                            AudioPlayer.Instance.PlaySound(explosionSound);
                             return 1;
                         }
                         else
                         {
                             Instantiate(_crossPrefab, tileComp.gameObject.transform).transform.parent = aiParent;
                             tileComp.aiShip = null;
+                            AudioPlayer.Instance.PlaySound(hitSound);
                             return 0;
                         }
                         
 
                     }
                     Instantiate(_dotPrefab, tileComp.gameObject.transform).transform.parent = aiParent;
+                    AudioPlayer.Instance.PlaySound(waterSound);
                     return -1;
                 }
                 else
@@ -77,16 +81,19 @@ public class ShootingManager : MonoBehaviour
                             tileComp.playerShip.GetComponent<DG_Animations>().DeathAnimation();
                             MarkShotsAround(tileComp.playerShip.currentlyOccupiedTiles, player);
                             tileComp.playerShip = null;
+                            AudioPlayer.Instance.PlaySound(explosionSound);
                             return 1;
                         }
                         else {
                             Instantiate(_crossPrefab, tileComp.gameObject.transform).transform.parent = playerParent;
                             tileComp.playerShip = null;
+                            AudioPlayer.Instance.PlaySound(hitSound);
                             return 0;
                         }   
                        
                     }
                     Instantiate(_dotPrefab, tileComp.gameObject.transform).transform.parent = playerParent;
+                    AudioPlayer.Instance.PlaySound(waterSound);
                     return -1;
                 }
             }

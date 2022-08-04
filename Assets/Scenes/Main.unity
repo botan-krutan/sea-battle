@@ -200,6 +200,7 @@ MonoBehaviour:
   curDir: up
   currentlyOccupiedTiles: []
   isPlaced: 0
+  placeSound: {fileID: 8300000, guid: 862a42098c66f8c45a1ec1e91ae794b9, type: 3}
 --- !u!212 &70616376
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -317,6 +318,7 @@ MonoBehaviour:
   curDir: up
   currentlyOccupiedTiles: []
   isPlaced: 0
+  placeSound: {fileID: 8300000, guid: 862a42098c66f8c45a1ec1e91ae794b9, type: 3}
 --- !u!212 &81238590
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -460,6 +462,7 @@ MonoBehaviour:
   curDir: up
   currentlyOccupiedTiles: []
   isPlaced: 0
+  placeSound: {fileID: 8300000, guid: 862a42098c66f8c45a1ec1e91ae794b9, type: 3}
 --- !u!212 &90789699
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -812,6 +815,7 @@ MonoBehaviour:
   curDir: up
   currentlyOccupiedTiles: []
   isPlaced: 0
+  placeSound: {fileID: 8300000, guid: 862a42098c66f8c45a1ec1e91ae794b9, type: 3}
 --- !u!212 &337969485
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1012,6 +1016,7 @@ MonoBehaviour:
   curDir: up
   currentlyOccupiedTiles: []
   isPlaced: 0
+  placeSound: {fileID: 8300000, guid: 862a42098c66f8c45a1ec1e91ae794b9, type: 3}
 --- !u!212 &500145705
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1288,6 +1293,7 @@ MonoBehaviour:
   curDir: up
   currentlyOccupiedTiles: []
   isPlaced: 0
+  placeSound: {fileID: 8300000, guid: 862a42098c66f8c45a1ec1e91ae794b9, type: 3}
 --- !u!212 &619697565
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1530,6 +1536,9 @@ MonoBehaviour:
   _dotPrefab: {fileID: 7247467850065521101, guid: 7fbe00239d53a1442aa23c86a8ee56d8, type: 3}
   playerParent: {fileID: 767966479}
   aiParent: {fileID: 1211206207}
+  waterSound: {fileID: 8300000, guid: d79cf03919535ea43a2fe5f88c818497, type: 3}
+  hitSound: {fileID: 8300000, guid: 3913ac9380b4ca941bee91ae59a481ed, type: 3}
+  explosionSound: {fileID: 8300000, guid: 725cc6adc6502f7459184741a75d1598, type: 3}
 --- !u!1 &718192421
 GameObject:
   m_ObjectHideFlags: 0
@@ -1864,6 +1873,7 @@ MonoBehaviour:
   curDir: up
   currentlyOccupiedTiles: []
   isPlaced: 0
+  placeSound: {fileID: 8300000, guid: 862a42098c66f8c45a1ec1e91ae794b9, type: 3}
 --- !u!212 &894435893
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2033,6 +2043,7 @@ MonoBehaviour:
   curDir: up
   currentlyOccupiedTiles: []
   isPlaced: 0
+  placeSound: {fileID: 8300000, guid: 862a42098c66f8c45a1ec1e91ae794b9, type: 3}
 --- !u!212 &969195079
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2202,6 +2213,7 @@ MonoBehaviour:
   curDir: up
   currentlyOccupiedTiles: []
   isPlaced: 0
+  placeSound: {fileID: 8300000, guid: 862a42098c66f8c45a1ec1e91ae794b9, type: 3}
 --- !u!61 &973237458
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2319,6 +2331,7 @@ MonoBehaviour:
   curDir: up
   currentlyOccupiedTiles: []
   isPlaced: 0
+  placeSound: {fileID: 8300000, guid: 862a42098c66f8c45a1ec1e91ae794b9, type: 3}
 --- !u!212 &1005639578
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2892,6 +2905,7 @@ MonoBehaviour:
   curDir: up
   currentlyOccupiedTiles: []
   isPlaced: 0
+  placeSound: {fileID: 8300000, guid: 862a42098c66f8c45a1ec1e91ae794b9, type: 3}
 --- !u!212 &1232033316
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3002,6 +3016,7 @@ GameObject:
   - component: {fileID: 1327742059}
   - component: {fileID: 1327742058}
   - component: {fileID: 1327742057}
+  - component: {fileID: 1327742060}
   m_Layer: 0
   m_Name: results_image
   m_TagString: Untagged
@@ -3090,6 +3105,102 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1327742055}
   m_CullTransparentMesh: 1
+--- !u!82 &1327742060
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1327742055}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 4204654ab7242244c8b4ceeab47087a8, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1410128592
 GameObject:
   m_ObjectHideFlags: 0
@@ -3167,6 +3278,7 @@ MonoBehaviour:
   curDir: up
   currentlyOccupiedTiles: []
   isPlaced: 0
+  placeSound: {fileID: 8300000, guid: 862a42098c66f8c45a1ec1e91ae794b9, type: 3}
 --- !u!212 &1410128596
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3516,6 +3628,7 @@ MonoBehaviour:
   curDir: up
   currentlyOccupiedTiles: []
   isPlaced: 0
+  placeSound: {fileID: 8300000, guid: 862a42098c66f8c45a1ec1e91ae794b9, type: 3}
 --- !u!212 &1550283587
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3617,6 +3730,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1558432341}
+  - component: {fileID: 1558432343}
+  - component: {fileID: 1558432342}
   m_Layer: 0
   m_Name: Audio Player
   m_TagString: Untagged
@@ -3639,6 +3754,114 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1558432342
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1558432340}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1558432343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1558432340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fb668867b2f8e048825076e52739143, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1609568626
 GameObject:
   m_ObjectHideFlags: 0
@@ -3690,6 +3913,7 @@ MonoBehaviour:
   curDir: up
   currentlyOccupiedTiles: []
   isPlaced: 0
+  placeSound: {fileID: 8300000, guid: 862a42098c66f8c45a1ec1e91ae794b9, type: 3}
 --- !u!212 &1609568629
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3859,6 +4083,7 @@ MonoBehaviour:
   curDir: up
   currentlyOccupiedTiles: []
   isPlaced: 0
+  placeSound: {fileID: 8300000, guid: 862a42098c66f8c45a1ec1e91ae794b9, type: 3}
 --- !u!212 &1633379102
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4109,6 +4334,7 @@ MonoBehaviour:
   curDir: up
   currentlyOccupiedTiles: []
   isPlaced: 0
+  placeSound: {fileID: 8300000, guid: 862a42098c66f8c45a1ec1e91ae794b9, type: 3}
 --- !u!212 &1701449998
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4554,6 +4780,7 @@ MonoBehaviour:
   curDir: up
   currentlyOccupiedTiles: []
   isPlaced: 0
+  placeSound: {fileID: 8300000, guid: 862a42098c66f8c45a1ec1e91ae794b9, type: 3}
 --- !u!212 &1781428736
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4702,6 +4929,7 @@ MonoBehaviour:
   curDir: up
   currentlyOccupiedTiles: []
   isPlaced: 0
+  placeSound: {fileID: 8300000, guid: 862a42098c66f8c45a1ec1e91ae794b9, type: 3}
 --- !u!212 &1986087269
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4871,6 +5099,7 @@ MonoBehaviour:
   curDir: up
   currentlyOccupiedTiles: []
   isPlaced: 0
+  placeSound: {fileID: 8300000, guid: 862a42098c66f8c45a1ec1e91ae794b9, type: 3}
 --- !u!212 &2085760753
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4988,6 +5217,7 @@ MonoBehaviour:
   curDir: up
   currentlyOccupiedTiles: []
   isPlaced: 0
+  placeSound: {fileID: 8300000, guid: 862a42098c66f8c45a1ec1e91ae794b9, type: 3}
 --- !u!212 &2140457063
 SpriteRenderer:
   m_ObjectHideFlags: 0

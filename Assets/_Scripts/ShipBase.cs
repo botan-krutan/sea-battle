@@ -12,6 +12,7 @@ public class ShipBase : MonoBehaviour
     public List<Tile> currentlyOccupiedTiles = new List<Tile>();
     List<Tile> nearOccupiedTiles = new List<Tile>();
     public bool isPlaced = false;
+    [SerializeField] AudioClip placeSound;
     void Start()
     {
         
@@ -86,6 +87,7 @@ public class ShipBase : MonoBehaviour
 
                     currentlyOccupiedTiles = futureOccupiedTiles;
                     isPlaced = true;
+                    AudioPlayer.Instance.PlaySound(placeSound);
                     if(player)
                     {
                        foreach(var item in gameObject.transform.parent.GetComponentsInChildren<ShipBase>(false))
