@@ -9,7 +9,7 @@ public class ShipBase : MonoBehaviour
     // Start is called before the first frame update
     public int hp = 0;
     public string curDir = "down";
-    List<Tile> currentlyOccupiedTiles = new List<Tile>();
+    public List<Tile> currentlyOccupiedTiles = new List<Tile>();
     List<Tile> nearOccupiedTiles = new List<Tile>();
     public bool isPlaced = false;
     void Start()

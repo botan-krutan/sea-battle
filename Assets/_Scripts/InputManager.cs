@@ -111,7 +111,7 @@ public class InputManager : MonoBehaviour
 
             }
         }
-        if(Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Mouse2))
         {
             if(GameManager.Instance.canContinue)
             {

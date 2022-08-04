@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public GameState gameState;
@@ -20,16 +21,6 @@ public class GameManager : MonoBehaviour
                 aiGroup.SetActive(true);
                 break;
             case GameState.AiTurn:
-                bool stopGame = true;
-                foreach (var item in aiGroup.GetComponentsInChildren<ShipBase>())
-                {
-                    if(item.hp > 0)
-                    {
-                        stopGame = false;
-                    }
-
-                }
-                if (stopGame) UpdateState(GameState.PlayerWin);
                 InputManager.Instance.alreadyShooted = false;
                 playerGroup.SetActive(true);
                 aiGroup.SetActive(false);
@@ -69,6 +60,14 @@ public class GameManager : MonoBehaviour
     public void EndGame(bool playerWins)
     {
         gameEnd.SetActive(true);
-        if (playerWins) endText.GetComponent<TextMeshPro>().text = "PLAYER WINS!";
+        if (playerWins) endText.GetComponent<TextMeshProUGUI>().text = "PLAYER WINS!";
+    }
+    public void GoToMenu()
+    {
+        SceneManager.LoadScene("MainMenu");   
+    }
+    public void RestartGame()
+    {
+        SceneManager.LoadScene("Main");
     }
 }

@@ -10,6 +10,7 @@ public class DG_Animations : MonoBehaviour
     {
         if (scalingAnim) ScalingAnimation(2, 0.6f);
         if (shoot) Shoot();
+        //Camera.main.DOShakePosition(0.5f, 1, 10, 90);
     }
 
     // Update is called once per frame
@@ -26,5 +27,12 @@ public class DG_Animations : MonoBehaviour
     {
         //gameObject.GetComponent<SpriteRenderer>().DOColor(new Color(255, 255, 255), 1f);
         gameObject.transform.DOScale(1, 0.5f);
+    }
+    public void DeathAnimation()
+    {
+        Camera.main.DOShakePosition(0.5f, 1, 10, 90);
+
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255);
+        gameObject.GetComponent<SpriteRenderer>().DOFade(0.3f, 2);
     }
 }

@@ -38,7 +38,19 @@ public class ShootingManager : MonoBehaviour
                         if (tileComp.aiShip.hp <= 0)
                         {
                             Instantiate(_crossPrefab, tileComp.gameObject.transform).transform.parent = aiParent;
+                            tileComp.aiShip.GetComponent<DG_Animations>().DeathAnimation();
+                            MarkShotsAround(tileComp.aiShip.currentlyOccupiedTiles, player);
                             tileComp.aiShip = null;
+                            bool stopGame = true;
+                            foreach (var item in GameObject.Find("AI Ships").GetComponentsInChildren<ShipBase>())
+                            {
+                                if (item.hp > 0)
+                                {
+                                    stopGame = false;
+                                }
+
+                            }
+                            if (stopGame) GameManager.Instance.UpdateState(GameManager.GameState.PlayerWin);
                             return 1;
                         }
                         else
@@ -62,6 +74,8 @@ public class ShootingManager : MonoBehaviour
                         if (tileComp.playerShip.hp <= 0)
                         {
                             Instantiate(_crossPrefab, tileComp.gameObject.transform).transform.parent = playerParent;
+                            tileComp.playerShip.GetComponent<DG_Animations>().DeathAnimation();
+                            MarkShotsAround(tileComp.playerShip.currentlyOccupiedTiles, player);
                             tileComp.playerShip = null;
                             return 1;
                         }
@@ -79,7 +93,36 @@ public class ShootingManager : MonoBehaviour
         }
         return -1;
     }
+    void MarkShotsAround(List<Tile> listCells, bool player)
+    {
+        foreach (var cell in listCells) // each cell beneath the new settled ship
+        {
+            int x = int.Parse(cell.gameObject.name.Replace($"Tile ", "")[0].ToString());
+            int y = int.Parse(cell.gameObject.name.Replace($"Tile ", "")[1].ToString());
+            for (int i = -1; i <= 1; i++)
+            {
+                for (int j = -1; j <= 1; j++)
+                {
+                    if ((x + i >= 0) && (x + i <= 9) && (y + j >= 0) && (y + j <= 9))
+                    {
+                        if (!listCells.Contains(TileManager.Instance.GetTile(x + i, y + j)))
+                        {
+                            if (player)
+                            {
+                                Instantiate(_dotPrefab, TileManager.Instance.GetTile(x + i, y + j).gameObject.transform).transform.parent = aiParent;
+                            }
+                            else Instantiate(_dotPrefab, TileManager.Instance.GetTile(x + i, y + j).gameObject.transform).transform.parent = playerParent;
 
+                        }
+
+                        
+                        
+
+                    }
+                }
+            }
+        }
+    }
 }
 
 
