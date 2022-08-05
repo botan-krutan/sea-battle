@@ -82,7 +82,7 @@ public class ShipBase : MonoBehaviour
 
                     for (int i = 0; i < currentlyOccupiedTiles.Count; i++)
                     {
-                        if (currentlyOccupiedTiles[i] != raycastedTile) currentlyOccupiedTiles[i].playerShip = null;
+                        if (currentlyOccupiedTiles[i] != raycastedTile && !futureOccupiedTiles.Contains(currentlyOccupiedTiles[i])) currentlyOccupiedTiles[i].playerShip = null;
                     }
 
                     currentlyOccupiedTiles = futureOccupiedTiles;
@@ -198,7 +198,7 @@ public class ShipBase : MonoBehaviour
                 {
                     if ((x + i >= 0) && (x + i <= 9) && (y + j >= 0) && (y + j <= 9))
                     {
-                        if (! listCells.Contains(TileManager.Instance.GetTile(x + i, y + j)) && !tiles.Contains(TileManager.Instance.GetTile(x + i, y + j)))
+                        if (!tiles.Contains(TileManager.Instance.GetTile(x + i, y + j)))
                         {
                             tiles.Add(TileManager.Instance.GetTile(x + i, y + j));
                             if (TileManager.Instance.GetTile(x + i, y + j).nearShips[0] != null)
@@ -206,6 +206,7 @@ public class ShipBase : MonoBehaviour
                                 TileManager.Instance.GetTile(x + i, y + j).nearShips[1] = this;
                             }
                             else TileManager.Instance.GetTile(x + i, y + j).nearShips[0] = this;
+                            //!listCells.Contains(TileManager.Instance.GetTile(x + i, y + j))
                         }
 
                         
