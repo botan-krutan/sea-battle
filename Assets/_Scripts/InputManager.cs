@@ -46,7 +46,7 @@ public class InputManager : MonoBehaviour
                         {
                             Debug.Log("Placing Object");
                             //selectedShip.GetComponent<SpriteRenderer>().color = new Color(0,0,0,0);
-                            selectedShip.PlaceShip(mousePos.x, mousePos.y, selectedShip.hp, selectedShip.curDir, true);
+                            selectedShip.PlaceShip(mousePos.x, mousePos.y, selectedShip.hp, selectedShip.curentDirection, true);
                             selectedShip = null;
                         }
 
@@ -88,7 +88,7 @@ public class InputManager : MonoBehaviour
                         if (tile.playerShip != null)
                         {
                             ShipBase ship = tile.playerShip;
-                            switch (ship.curDir)
+                            switch (ship.curentDirection)
                             {
                                 case "right":
                                     ship.PlaceShip(mousePos.x, mousePos.y, ship.hp, "down", true);
