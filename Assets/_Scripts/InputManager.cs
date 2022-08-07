@@ -1,63 +1,82 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
+using UnityEngine.UI;
+
 public class InputManager : MonoBehaviour
 {
+    [SerializeField] private Button _autoPlaceShipsButton;
+    [SerializeField] private Button _playButton;
+
     ShipBase selectedShip;
     public static InputManager Instance;
-    public Transform playerGroup;
-    public bool alreadyShooted = false;
-    // Start is called before the first frame update
-    void Start()
+    public bool alreadyShooted;
+
+    public void InitInputManager()
     {
-        
+        _autoPlaceShipsButton.onClick.AddListener(TileManager.Instance.AutoPlaceShipsButtonPressHandler);
+        _playButton.onClick.AddListener(PlayButtonPressHandler);
+        _playButton.gameObject.SetActive(false);
+        _autoPlaceShipsButton.gameObject.SetActive(true);
+        TileManager.OnBattlefieldChanged += SwitchButtons;
     }
     void Awake() => Instance = this;
-    // Update is called once per frame
+
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (selectedShip != null)
+        {
+            Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            pos.z = 0;
+            selectedShip.transform.position = pos;
+        }
+
+        if (Input.GetKeyUp(KeyCode.Backspace))
+        {
+            GameManager.debugMode = !GameManager.debugMode;
+        }
+
+        if (Input.GetMouseButtonDown(0))
         {
             RaycastHit2D result = MouseRaycast();
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
             switch (GameManager.Instance.gameState)
-                {
-                    case GameManager.GameState.PlayerArrange:
-                        if (!selectedShip)
-                        {   
-                            if(result)
+            {
+                case GameManager.GameState.PlayerArrange:
+                    if (!selectedShip && result != null)
+                    {
+                        RaycastHit2D[] results = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+                        foreach (var item in results)
+                        {
+                            if (item.collider.gameObject.TryGetComponent<ShipBase>(out ShipBase shipBase))
                             {
-                                RaycastHit2D[] results = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-                            foreach (var item in results)
-                            {
-                                if (item.collider.gameObject.TryGetComponent<ShipBase>(out ShipBase shipBase))
-                                {
-                                    selectedShip = shipBase;
-                                    shipBase.gameObject.transform.DOScale(1.3f, 0.5f);
-                                    Debug.Log(selectedShip.name);
-                                }
+                                selectedShip = shipBase;
+                                TileManager.Instance.RemoveShipOnBattlefield(selectedShip);
+                                Debug.Log(selectedShip.name);
                             }
-
-                            }
-
                         }
-                        else
+                    }
+                    else
+                    {
+                        bool isCoordinatesReceived = MousePosToBattlefieldPos(mousePos.x, mousePos.y, out int x, out int y);
+
+                        if (isCoordinatesReceived &&
+                            TileManager.Instance.CanPlaceShip(selectedShip, x, y, Battlefield.Player))
                         {
                             Debug.Log("Placing Object");
-                            //selectedShip.GetComponent<SpriteRenderer>().color = new Color(0,0,0,0);
-                            selectedShip.PlaceShip(mousePos.x, mousePos.y, selectedShip.hp, selectedShip.curentDirection, true);
+                            TileManager.Instance.PlaceShip(selectedShip, x, y, Battlefield.Player);
                             selectedShip = null;
                         }
+                    }
+                    break;
 
-                        break;
-                    case GameManager.GameState.PlayerTurn:
-                        if (alreadyShooted) return;
-                        float[] coordinates = new float[2];
-                        coordinates[0] = mousePos.x;
-                        coordinates[1] = mousePos.y;
-                        int res = 0;
-                        res = ShootingManager.Instance.ShootTile(coordinates, true);
+                case GameManager.GameState.PlayerTurn:
+                    if (alreadyShooted) return;
+                    float[] coordinates = new float[2];
+                    coordinates[0] = mousePos.x;
+                    coordinates[1] = mousePos.y;
+                    int res = 0;
+                    res = ShootingManager.Instance.ShootTile(coordinates, true);
                     if (res == -1)
                     {
                         StartCoroutine(UpdateOn3Secs());
@@ -67,68 +86,33 @@ public class InputManager : MonoBehaviour
                     {
                         alreadyShooted = false;
                     }
-                        break;
-                    case GameManager.GameState.AiTurn:
-                        alreadyShooted = false;
-                        break;
-                
-            }
-        }
-        if(Input.GetMouseButtonDown(1))
-        {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            if (GameManager.Instance.gameState == GameManager.GameState.PlayerArrange)
-            {
+                    break;
 
-             RaycastHit2D[] results = Physics2D.RaycastAll(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-                foreach (var item in results)
-                {
-                    if (item.collider.gameObject.TryGetComponent(out Tile tile))
-                    {
-                        if (tile.playerShip != null)
-                        {
-                            ShipBase ship = tile.playerShip;
-                            switch (ship.curentDirection)
-                            {
-                                case "right":
-                                    ship.PlaceShip(mousePos.x, mousePos.y, ship.hp, "down", true);
-                                    break;
-                                case "down":
-                                    ship.PlaceShip(mousePos.x, mousePos.y, ship.hp, "left", true);
-                                    break;
-                                case "left":
-                                    ship.PlaceShip(mousePos.x, mousePos.y, ship.hp, "up", true);
-                                    break;
-                                case "up":
-                                    ship.PlaceShip(mousePos.x, mousePos.y, ship.hp, "right", true);
-                                    break;
-                            }
-                        }
-
-
-                    }
-                }
+                case GameManager.GameState.AiTurn:
+                    alreadyShooted = false;
+                    break;
 
             }
         }
-        if (Input.GetKeyDown(KeyCode.Mouse2))
+
+        if (Input.GetMouseButtonDown(1) && selectedShip != null && GameManager.Instance.gameState == GameManager.GameState.PlayerArrange)
         {
-            if(GameManager.Instance.canContinue)
-            {
-                switch(GameManager.Instance.gameState)
-                {
-                    case GameManager.GameState.PlayerArrange:
-                        GameManager.Instance.UpdateState(GameManager.GameState.AiArrange);
-                        GameManager.Instance.ContinueMessage(false);
-                        break;
-                    case GameManager.GameState.AiTurn:
-                        GameManager.Instance.UpdateState(GameManager.GameState.PlayerTurn);
-                        GameManager.Instance.ContinueMessage(false);
-                        break;
-                }
-            }
+            selectedShip.RotateShip();
         }
     }
+    private void PlayButtonPressHandler()
+    {
+        _autoPlaceShipsButton.gameObject.SetActive(false);
+        _playButton.gameObject.SetActive(false);
+        GameManager.Instance.StartGame();
+    }
+
+    private void SwitchButtons(bool isAllShipArranged)
+    {
+        _autoPlaceShipsButton.gameObject.SetActive(!isAllShipArranged);
+        _playButton.gameObject.SetActive(isAllShipArranged);
+    }
+
     IEnumerator UpdateOn3Secs()
     {
         yield return new WaitForSeconds(1);
@@ -137,5 +121,27 @@ public class InputManager : MonoBehaviour
     public RaycastHit2D MouseRaycast()
     {
         return Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+    }
+
+    private bool MousePosToBattlefieldPos(float mousePosX, float mousePosY, out int x, out int y)
+    {
+        x = -1;
+        y = -1;
+
+        if (mousePosX > 9.5 && mousePosY > 9.5 && mousePosX < -0.5 && mousePosY < -0.5) return false;
+
+        RaycastHit2D[] results = Physics2D.RaycastAll(new Vector3(mousePosX, mousePosY, 0), Vector2.zero);
+
+        foreach (var result in results)
+        {
+            if (result.collider.gameObject.TryGetComponent(out Tile tile))
+            {
+                x = tile.x;
+                y = tile.y;
+                return true;
+            }
+        }
+
+        return false;
     }
 }

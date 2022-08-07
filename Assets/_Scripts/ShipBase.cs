@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
-using System;
+using Random = UnityEngine.Random;
 
 public enum ShipDirection
 {
@@ -14,66 +12,52 @@ public enum ShipDirection
 
 public class ShipBase : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public int hp = 0;
-    public ShipDirection curentDirection = ShipDirection.Down;
+    public int hp;
+    public ShipDirection currentDirection { get; private set; } = ShipDirection.Up;
     public List<Tile> currentlyOccupiedTiles = new List<Tile>();
-    List<Tile> nearOccupiedTiles = new List<Tile>();
-    public bool isPlaced = false;
-    [SerializeField] AudioClip placeSound;
-    void Start()
+    public bool IsPlaced => currentlyOccupiedTiles.Count > 0;
+
+    public void RotateShip()
     {
-        
+        int state = (int)currentDirection;
+        state++;
+        if (state > 3) state = 0;
+        currentDirection = (ShipDirection)state;
+        UpdateShipRotation();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetRandomDirection()
     {
+        int dir = Random.Range(0, 4);
+        currentDirection = (ShipDirection)dir;
+        UpdateShipRotation();
     }
-    
 
-    
+    public void AddOccupiedTile(Tile tile) => currentlyOccupiedTiles.Add(tile);
 
-    bool IsTileOccupied(Tile tile, bool player)
-    {   if (player)
-        {   
-                //Debug.Log("hi");
-                if (tile.playerShip != null && tile.playerShip != this || tile.nearShips[0] != null && tile.nearShips[0] != this || tile.nearShips[1] != null && tile.nearShips[1] != this)
-                {
-                    Debug.LogWarning(gameObject.name + $" ship placement failed. Player ship standing.");
-                    return true;
-                }
+    public void ClearOccupiedTile() => currentlyOccupiedTiles.Clear();
 
-        }
-
-        return false;
-    }
-    
-    void MarkShotsAround(List<Tile> listCells, ref List<Tile> tiles)
+    private void UpdateShipRotation()
     {
-        foreach (var cell in listCells) // each cell beneath the new settled ship
+        switch (currentDirection)
         {
-            int x = int.Parse(cell.gameObject.name.Replace($"Tile ", "")[0].ToString());
-            int y = int.Parse(cell.gameObject.name.Replace($"Tile ", "")[1].ToString());
-            for (int i = -1; i <= 1; i++)
-            {
-                for (int j = -1; j <= 1; j++)
-                {
-                    if ((x + i >= 0) && (x + i <= 9) && (y + j >= 0) && (y + j <= 9))
-                    {
-                        if (!tiles.Contains(TileManager.Instance.GetTile(x + i, y + j)))
-                        {
-                            tiles.Add(TileManager.Instance.GetTile(x + i, y + j));
-                            if (TileManager.Instance.GetTile(x + i, y + j).nearShips[0] != null)
-                            {
-                                TileManager.Instance.GetTile(x + i, y + j).nearShips[1] = this;
-                            }
-                            else TileManager.Instance.GetTile(x + i, y + j).nearShips[0] = this;
-                            //!listCells.Contains(TileManager.Instance.GetTile(x + i, y + j))
-                        }
-                    }
-                }
-            }
+            case ShipDirection.Right:
+                gameObject.transform.eulerAngles = new Vector3(gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y, -90);
+                break;
+            case ShipDirection.Up:
+                gameObject.transform.eulerAngles = new Vector3(gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y, 0);
+                break;
+            case ShipDirection.Down:
+                gameObject.transform.eulerAngles = new Vector3(gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y, -180);
+                break;
+            case ShipDirection.Left:
+                gameObject.transform.eulerAngles = new Vector3(gameObject.transform.eulerAngles.x, gameObject.transform.eulerAngles.y, 90);
+                break;
         }
+    }
+
+    public void UpdateShipPosition(Vector3 position)
+    {
+        gameObject.transform.position = position;
     }
 }

@@ -8,13 +8,22 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public UnityEvent<GameState> OnStateUpdated = new UnityEvent<GameState>();
     [SerializeField] GameObject playerGroup, aiGroup, continueMessage, gameEnd, endText;
-    public bool debugMode, canContinue = false;
+    public static bool debugMode;
+    public static bool canContinue;
     private void Awake() => Instance = this;
+
+    private void Start()
+    {
+        TileManager.Instance.InitTileManager();
+        AiManager.Instance.InitAiManager();
+        InputManager.Instance.InitInputManager();
+        UpdateState(GameState.PlayerArrange);
+    }
 
     public void UpdateState(GameState newState)
     {
         gameState = newState;
-        switch(gameState)
+        switch (gameState)
         {
             case GameState.PlayerTurn:
                 playerGroup.SetActive(false);
@@ -45,18 +54,12 @@ public class GameManager : MonoBehaviour
         PlayerWin,
         PlayerLoose
     }
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Backspace))
-        {
-            debugMode = !debugMode;
-        }
-    }
     public void ContinueMessage(bool activate)
     {
         continueMessage.SetActive(activate);
         canContinue = activate;
     }
+
     public void EndGame(bool playerWins)
     {
         gameEnd.SetActive(true);
@@ -64,10 +67,15 @@ public class GameManager : MonoBehaviour
     }
     public void GoToMenu()
     {
-        SceneManager.LoadScene("MainMenu");   
+        SceneManager.LoadScene("MainMenu");
     }
     public void RestartGame()
     {
         SceneManager.LoadScene("Main");
+    }
+
+    public void StartGame()
+    {
+        UpdateState(GameState.PlayerTurn);
     }
 }
